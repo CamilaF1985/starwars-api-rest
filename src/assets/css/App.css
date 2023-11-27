@@ -1,9 +1,86 @@
-body{
-  margin:0;
-  padding:0;
+body {
+  margin: 0;
+  padding: 0;
 }
 
 .barra-personalizada {
-  padding: 0 64px; 
+  padding: 0 64px;
 }
+
+.content-container {
+  padding: 20px;
+}
+
+.personajes-header,
+.vehiculos-header,
+.planetas-header {
+  color: red;
+  cursor: pointer;
+  margin-right: 20px;
+}
+
+.link-blue {
+  color: blue;
+  cursor: pointer;
+  margin-right: 20px;
+}
+
+.link-green {
+  color: green;
+  cursor: pointer;
+}
+
+.personajes-container,
+.vehiculos-container,
+.planetas-container {
+  overflow-x: auto;
+  display: flex;
+}
+
+.personaje-card,
+.vehiculo-card,
+.planeta-card {
+  flex: 0 0 auto;
+  margin-right: 10px;
+}
+
+.vehiculo-card,
+.planeta-card {
+  height: 100%; 
+}
+
+.card {
+  width: 18rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-img-top {
+  width: 100%;
+  height: auto;
+}
+
+.card-body {
+  flex-grow: 1;
+  text-align: left;
+}
+
+.card-title {
+  margin-bottom: 0.75rem;
+}
+
+.card-text {
+  margin-bottom: 1rem;
+}
+
+.btn {
+  margin-right: 0.5rem;
+}
+
+
+
+
+
+
+
 

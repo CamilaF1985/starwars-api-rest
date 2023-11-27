@@ -1,5 +1,3 @@
-// Personaje.jsx
-
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
@@ -20,19 +18,20 @@ const Personaje = ({ personajeId }) => {
   }, [personajeId]);
 
   if (!personaje) {
-    return null; // Puedes mostrar un mensaje de carga si lo deseas
+    return null;
   }
 
   const properties = personaje.result && personaje.result.properties;
 
   if (!properties) {
-    return null; // Manejar el caso cuando no hay propiedades
+    console.error('Las propiedades del personaje son nulas.');
+    return null;
   }
 
   const { name, gender, hair_color, eye_color } = properties;
 
   return (
-    <div className="card" style={{ width: '18rem' }}>
+    <div className="card">
       <img
         src="http://placehold.it/400x200"
         className="card-img-top"
@@ -57,6 +56,9 @@ const Personaje = ({ personajeId }) => {
 };
 
 export default Personaje;
+
+
+
 
 
 
