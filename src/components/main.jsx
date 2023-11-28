@@ -2,7 +2,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
-import RoutesComponent from '../RoutesComponent';
+import RoutesComponent from '../routes/RoutesComponent';
 
 ReactDOM.render(
   <BrowserRouter>

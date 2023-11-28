@@ -33,7 +33,7 @@ const Planeta = ({ planetaId }) => {
   const { name, population, gravity } = properties;
 
   const redirectToDetalle = () => {
-    navigate(`/detalleplaneta/planets/${planetaId}`);
+    navigate(`/views/detalleplaneta/planets/${planetaId}`);
   };
 
   return (
