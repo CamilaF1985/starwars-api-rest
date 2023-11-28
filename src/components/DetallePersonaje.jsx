@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 
 const DetallePersonaje = () => {
   const { id } = useParams();
@@ -53,6 +53,12 @@ const DetallePersonaje = () => {
             <strong style={{ color: 'red' }}>{key}:</strong> {value || 'N/A'}
           </div>
         ))}
+      </div>
+      {/* Agregar el enlace para volver al inicio */}
+      <div className="row">
+        <div className="col-md-12">
+          <Link to="/">Volver al inicio</Link>
+        </div>
       </div>
     </div>
   );
