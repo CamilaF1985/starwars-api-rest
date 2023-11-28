@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Personaje = ({ personajeId }) => {
   const [personaje, setPersonaje] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const obtenerPersonaje = async () => {
@@ -30,13 +32,14 @@ const Personaje = ({ personajeId }) => {
 
   const { name, gender, hair_color, eye_color } = properties;
 
+  const redirectToDetalle = () => {
+    // Utiliza navigate para redirigir a la ruta correspondiente
+    navigate(`/detalleproducto/people/${personajeId}`);
+  };
+
   return (
     <div className="card">
-      <img
-        src="http://placehold.it/400x200"
-        className="card-img-top"
-        alt="Placehold.it"
-      />
+      <img src="http://placehold.it/400x200" className="card-img-top" alt="Placehold.it" />
       <div className="card-body">
         <h5 className="card-title">{name || 'N/A'}</h5>
         <p className="card-text">
@@ -44,7 +47,8 @@ const Personaje = ({ personajeId }) => {
           <strong>Color de pelo:</strong> {hair_color || 'N/A'}<br />
           <strong>Color de ojos:</strong> {eye_color || 'N/A'}
         </p>
-        <button className="btn btn-outline-primary" type="button">
+        {/* Utiliza el componente Link para la navegación */}
+        <button className="btn btn-outline-primary" type="button" onClick={redirectToDetalle}>
           Acerca de
         </button>
         <button className="btn btn-outline-warning" type="button">
@@ -56,6 +60,18 @@ const Personaje = ({ personajeId }) => {
 };
 
 export default Personaje;
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

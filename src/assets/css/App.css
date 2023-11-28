@@ -14,9 +14,16 @@ body {
 .personajes-header,
 .vehiculos-header,
 .planetas-header {
-  color: red;
   cursor: pointer;
   margin-right: 20px;
+}
+
+.personajes-header h2,
+.vehiculos-header h2,
+.planetas-header h2 {
+  color: red;
+  margin-left: 5rem; 
+  margin-top: 2rem;
 }
 
 .link-blue {
@@ -35,6 +42,7 @@ body {
 .planetas-container {
   overflow-x: auto;
   display: flex;
+  padding: 20px;
 }
 
 .personaje-card,
@@ -46,7 +54,7 @@ body {
 
 .vehiculo-card,
 .planeta-card {
-  height: 100%; 
+  height: 100%;
 }
 
 .card {
@@ -67,15 +75,19 @@ body {
 
 .card-title {
   margin-bottom: 0.75rem;
+  color: black;
 }
 
 .card-text {
   margin-bottom: 1rem;
+  color: black;
 }
 
 .btn {
   margin-right: 0.5rem;
 }
+
+
 
 
 

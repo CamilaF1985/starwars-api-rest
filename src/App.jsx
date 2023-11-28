@@ -1,8 +1,9 @@
+// App.jsx
 import React, { useState } from 'react';
 import BarraNavegacion from './components/Navbar';
 import Personajes from './components/Personajes';
 import Vehiculos from './components/Vehiculos';
-import Planetas from './components/Planetas'; // Importa el componente de Planetas
+import Planetas from './components/Planetas';
 import './assets/css/App.css';
 
 function App() {
@@ -12,44 +13,38 @@ function App() {
 
   const toggleMostrarPersonajes = () => {
     setMostrarPersonajes(!mostrarPersonajes);
-    setMostrarVehiculos(false);
-    setMostrarPlanetas(false);
   };
 
   const toggleMostrarVehiculos = () => {
     setMostrarVehiculos(!mostrarVehiculos);
-    setMostrarPersonajes(false);
-    setMostrarPlanetas(false);
   };
 
   const toggleMostrarPlanetas = () => {
     setMostrarPlanetas(!mostrarPlanetas);
-    setMostrarPersonajes(false);
-    setMostrarVehiculos(false);
   };
 
   return (
     <div>
       <BarraNavegacion />
       <div className="content-container">
-        <div className="personajes-header" onClick={toggleMostrarPersonajes}>
-          <h2>Personajes</h2>
+        <div className="personajes-header">
+          <h2 onClick={toggleMostrarPersonajes}>Personajes</h2>
           {mostrarPersonajes && (
             <div className="personajes-container">
               <Personajes />
             </div>
           )}
         </div>
-        <div className="vehiculos-header" onClick={toggleMostrarVehiculos}>
-          <h2>Vehículos</h2>
+        <div className="vehiculos-header">
+          <h2 onClick={toggleMostrarVehiculos}>Vehículos</h2>
           {mostrarVehiculos && (
             <div className="vehiculos-container">
               <Vehiculos />
             </div>
           )}
         </div>
-        <div className="planetas-header" onClick={toggleMostrarPlanetas}>
-          <h2>Planetas</h2>
+        <div className="planetas-header">
+          <h2 onClick={toggleMostrarPlanetas}>Planetas</h2>
           {mostrarPlanetas && (
             <div className="planetas-container">
               <Planetas />
@@ -58,10 +53,18 @@ function App() {
         </div>
       </div>
     </div>
-  );  
+  );
 }
 
 export default App;
+
+
+
+
+
+
+
+
 
 
 

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 const Planeta = ({ planetaId }) => {
   const [planeta, setPlaneta] = useState(null);
@@ -43,9 +44,9 @@ const Planeta = ({ planetaId }) => {
           <strong>Población:</strong> {population || 'N/A'}<br />
           <strong>Gravedad:</strong> {gravity || 'N/A'}
         </p>
-        <button className="btn btn-outline-primary" type="button">
+        <Link to={`/planetas/${planetaId}`} className="btn btn-outline-primary">
           Acerca de
-        </button>
+        </Link>
         <button className="btn btn-outline-warning" type="button">
           <i className="bi bi-heart"></i> Favoritos
         </button>
@@ -55,3 +56,4 @@ const Planeta = ({ planetaId }) => {
 };
 
 export default Planeta;
+

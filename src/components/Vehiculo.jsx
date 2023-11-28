@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 const Vehiculo = ({ vehiculoId }) => {
   const [vehiculo, setVehiculo] = useState(null);
@@ -43,9 +44,9 @@ const Vehiculo = ({ vehiculoId }) => {
           <strong>Modelo:</strong> {model || 'N/A'}<br />
           <strong>Fabricante:</strong> {manufacturer || 'N/A'}
         </p>
-        <button className="btn btn-outline-primary" type="button">
+        <Link to={`/vehiculos/${vehiculoId}`} className="btn btn-outline-primary">
           Acerca de
-        </button>
+        </Link>
         <button className="btn btn-outline-warning" type="button">
           <i className="bi bi-heart"></i> Favoritos
         </button>
@@ -55,5 +56,6 @@ const Vehiculo = ({ vehiculoId }) => {
 };
 
 export default Vehiculo;
+
 
 

@@ -1,12 +1,19 @@
-// main.jsx
+// index.jsx o main.jsx
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from '@src/App.jsx';
+import { BrowserRouter } from 'react-router-dom';
+import RoutesComponent from '../RoutesComponent';
 
-ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
+ReactDOM.render(
+  <BrowserRouter>
+    <React.StrictMode>
+      <RoutesComponent />
+    </React.StrictMode>
+  </BrowserRouter>,
+  document.getElementById('root')
 );
+
+
+
 
 
