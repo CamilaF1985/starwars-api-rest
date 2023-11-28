@@ -34,7 +34,7 @@ const Personaje = ({ personajeId }) => {
 
   const redirectToDetalle = () => {
     // Utiliza navigate para redirigir a la ruta correspondiente
-    navigate(`/detalleproducto/people/${personajeId}`);
+    navigate(`/detallepersonaje/people/${personajeId}`);
   };
 
   return (

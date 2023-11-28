@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Planeta = ({ planetaId }) => {
   const [planeta, setPlaneta] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const obtenerPlaneta = async () => {
@@ -31,6 +32,10 @@ const Planeta = ({ planetaId }) => {
 
   const { name, population, gravity } = properties;
 
+  const redirectToDetalle = () => {
+    navigate(`/detalleplaneta/planets/${planetaId}`);
+  };
+
   return (
     <div className="card">
       <img
@@ -44,9 +49,9 @@ const Planeta = ({ planetaId }) => {
           <strong>Población:</strong> {population || 'N/A'}<br />
           <strong>Gravedad:</strong> {gravity || 'N/A'}
         </p>
-        <Link to={`/planetas/${planetaId}`} className="btn btn-outline-primary">
+        <button className="btn btn-outline-primary" type="button" onClick={redirectToDetalle}>
           Acerca de
-        </Link>
+        </button>
         <button className="btn btn-outline-warning" type="button">
           <i className="bi bi-heart"></i> Favoritos
         </button>
@@ -56,4 +61,5 @@ const Planeta = ({ planetaId }) => {
 };
 
 export default Planeta;
+
 
