@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { useFavoritos } from '../store/FavoritosContext'; 
 
 const Personaje = ({ personajeId }) => {
   const [personaje, setPersonaje] = useState(null);
   const navigate = useNavigate();
+  const { agregarFavorito } = useFavoritos(); 
 
   useEffect(() => {
     const obtenerPersonaje = async () => {
@@ -36,6 +38,13 @@ const Personaje = ({ personajeId }) => {
     navigate(`/views/detallepersonaje/people/${encodeURIComponent(name)}`);
   };
 
+  const agregarAFavoritos = () => {
+    agregarFavorito({
+      id: personajeId,
+      name,
+    });
+  };
+
   return (
     <div className="card">
       <img src="http://placehold.it/400x200" className="card-img-top" alt="Placehold.it" />
@@ -49,7 +58,7 @@ const Personaje = ({ personajeId }) => {
         <button className="btn btn-outline-primary" type="button" onClick={redirectToDetalle}>
           Acerca de
         </button>
-        <button className="btn btn-outline-warning" type="button">
+        <button className="btn btn-outline-warning" type="button" onClick={agregarAFavoritos}>
           <i className="bi bi-heart"></i> Favoritos
         </button>
       </div>
@@ -58,6 +67,7 @@ const Personaje = ({ personajeId }) => {
 };
 
 export default Personaje;
+
 
 
 

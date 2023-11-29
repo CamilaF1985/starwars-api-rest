@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { useFavoritos } from '../store/FavoritosContext'; 
 
 const Planeta = ({ planetaId }) => {
   const [planeta, setPlaneta] = useState(null);
   const navigate = useNavigate();
+  const { agregarFavorito } = useFavoritos(); 
 
   useEffect(() => {
     const obtenerPlaneta = async () => {
@@ -36,13 +38,16 @@ const Planeta = ({ planetaId }) => {
     navigate(`/views/detalleplaneta/planets/${encodeURIComponent(name)}`);
   };
 
+  const agregarAFavoritos = () => {
+    agregarFavorito({
+      id: planetaId,
+      name,
+    });
+  };
+
   return (
     <div className="card">
-      <img
-        src="http://placehold.it/400x200"
-        className="card-img-top"
-        alt="Placehold.it"
-      />
+      <img src="http://placehold.it/400x200" className="card-img-top" alt="Placehold.it" />
       <div className="card-body">
         <h5 className="card-title">{name || 'N/A'}</h5>
         <p className="card-text">
@@ -52,7 +57,7 @@ const Planeta = ({ planetaId }) => {
         <button className="btn btn-outline-primary" type="button" onClick={redirectToDetalle}>
           Acerca de
         </button>
-        <button className="btn btn-outline-warning" type="button">
+        <button className="btn btn-outline-warning" type="button" onClick={agregarAFavoritos}>
           <i className="bi bi-heart"></i> Favoritos
         </button>
       </div>
@@ -61,5 +66,6 @@ const Planeta = ({ planetaId }) => {
 };
 
 export default Planeta;
+
 
 
