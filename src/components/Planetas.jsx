@@ -11,8 +11,18 @@ const Planetas = () => {
     setLoading(true);
 
     try {
-      const response = await axios.get('https://www.swapi.tech/api/planets');
-      setPlanetas(response.data.results);
+      // Intenta obtener los planetas del localStorage
+      const storedPlanetas = localStorage.getItem('planetas');
+
+      if (storedPlanetas) {
+        setPlanetas(JSON.parse(storedPlanetas));
+      } else {
+        const response = await axios.get('https://www.swapi.tech/api/planets');
+        const planetasData = response.data.results;
+        // Guarda los planetas en el localStorage
+        localStorage.setItem('planetas', JSON.stringify(planetasData));
+        setPlanetas(planetasData);
+      }
     } catch (error) {
       console.error('Error al cargar planetas:', error);
     } finally {
@@ -36,3 +46,4 @@ const Planetas = () => {
 };
 
 export default Planetas;
+

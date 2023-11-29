@@ -11,8 +11,18 @@ const Vehiculos = () => {
     setLoading(true);
 
     try {
-      const response = await axios.get('https://www.swapi.tech/api/vehicles');
-      setVehiculos(response.data.results);
+      // Intenta obtener los vehículos del localStorage
+      const storedVehiculos = localStorage.getItem('vehiculos');
+
+      if (storedVehiculos) {
+        setVehiculos(JSON.parse(storedVehiculos));
+      } else {
+        const response = await axios.get('https://www.swapi.tech/api/vehicles');
+        const vehiculosData = response.data.results;
+        // Guarda los vehículos en el localStorage
+        localStorage.setItem('vehiculos', JSON.stringify(vehiculosData));
+        setVehiculos(vehiculosData);
+      }
     } catch (error) {
       console.error('Error al cargar vehículos:', error);
     } finally {
@@ -36,4 +46,5 @@ const Vehiculos = () => {
 };
 
 export default Vehiculos;
+
 

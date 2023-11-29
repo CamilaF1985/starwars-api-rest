@@ -1,20 +1,30 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { useFavoritos } from '../store/FavoritosContext'; 
+import { useFavoritos } from '../store/FavoritosContext';
 
 const Vehiculo = ({ vehiculoId }) => {
   const [vehiculo, setVehiculo] = useState(null);
   const navigate = useNavigate();
-  const { agregarFavorito } = useFavoritos(); 
+  const { agregarFavorito } = useFavoritos();
 
   useEffect(() => {
     const obtenerVehiculo = async () => {
-      try {
-        const response = await axios.get(`https://www.swapi.tech/api/vehicles/${vehiculoId}`);
-        setVehiculo(response.data);
-      } catch (error) {
-        console.error('Error al obtener el vehículo:', error);
+      // Intenta obtener el vehículo del localStorage
+      const storedVehiculo = localStorage.getItem(`vehiculo-${vehiculoId}`);
+
+      if (storedVehiculo) {
+        setVehiculo(JSON.parse(storedVehiculo));
+      } else {
+        try {
+          const response = await axios.get(`https://www.swapi.tech/api/vehicles/${vehiculoId}`);
+          const vehiculoData = response.data;
+          // Guarda el vehículo en el localStorage
+          localStorage.setItem(`vehiculo-${vehiculoId}`, JSON.stringify(vehiculoData));
+          setVehiculo(vehiculoData);
+        } catch (error) {
+          console.error('Error al obtener el vehículo:', error);
+        }
       }
     };
 
@@ -66,6 +76,7 @@ const Vehiculo = ({ vehiculoId }) => {
 };
 
 export default Vehiculo;
+
 
 
 

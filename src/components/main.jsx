@@ -1,17 +1,21 @@
-// index.jsx o main.jsx
 import React from 'react';
-import ReactDOM from 'react-dom';
-import { BrowserRouter } from 'react-router-dom';
+import { createRoot } from 'react-dom/client';
+import { BrowserRouter } from 'react-router-dom';  // Importa desde 'react-router-dom'
 import RoutesComponent from '../routes/RoutesComponent';
 
-ReactDOM.render(
-  <BrowserRouter>
-    <React.StrictMode>
+const root = document.getElementById('root');
+const reactRoot = createRoot(root);
+
+reactRoot.render(
+  <React.StrictMode>
+    <BrowserRouter>
       <RoutesComponent />
-    </React.StrictMode>
-  </BrowserRouter>,
-  document.getElementById('root')
+    </BrowserRouter>
+  </React.StrictMode>
 );
+
+
+
 
 
 

@@ -1,20 +1,30 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { useFavoritos } from '../store/FavoritosContext'; 
+import { useFavoritos } from '../store/FavoritosContext';
 
 const Personaje = ({ personajeId }) => {
   const [personaje, setPersonaje] = useState(null);
   const navigate = useNavigate();
-  const { agregarFavorito } = useFavoritos(); 
+  const { agregarFavorito } = useFavoritos();
 
   useEffect(() => {
     const obtenerPersonaje = async () => {
-      try {
-        const response = await axios.get(`https://www.swapi.tech/api/people/${personajeId}`);
-        setPersonaje(response.data);
-      } catch (error) {
-        console.error('Error al obtener el personaje:', error);
+      // Intenta obtener el personaje del localStorage
+      const storedPersonaje = localStorage.getItem(`personaje-${personajeId}`);
+
+      if (storedPersonaje) {
+        setPersonaje(JSON.parse(storedPersonaje));
+      } else {
+        try {
+          const response = await axios.get(`https://www.swapi.tech/api/people/${personajeId}`);
+          const personajeData = response.data;
+          // Guarda el personaje en el localStorage
+          localStorage.setItem(`personaje-${personajeId}`, JSON.stringify(personajeData));
+          setPersonaje(personajeData);
+        } catch (error) {
+          console.error('Error al obtener el personaje:', error);
+        }
       }
     };
 
@@ -67,6 +77,7 @@ const Personaje = ({ personajeId }) => {
 };
 
 export default Personaje;
+
 
 
 

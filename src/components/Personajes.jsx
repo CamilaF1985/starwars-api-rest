@@ -11,8 +11,18 @@ const Personajes = () => {
     setLoading(true);
 
     try {
-      const response = await axios.get('https://www.swapi.tech/api/people');
-      setPersonajes(response.data.results);
+      // Intenta obtener los personajes del localStorage
+      const storedPersonajes = localStorage.getItem('personajes');
+
+      if (storedPersonajes) {
+        setPersonajes(JSON.parse(storedPersonajes));
+      } else {
+        const response = await axios.get('https://www.swapi.tech/api/people');
+        const personajesData = response.data.results;
+        // Guarda los personajes en el localStorage
+        localStorage.setItem('personajes', JSON.stringify(personajesData));
+        setPersonajes(personajesData);
+      }
     } catch (error) {
       console.error('Error al cargar personajes:', error);
     } finally {
@@ -25,9 +35,9 @@ const Personajes = () => {
   }, []);
 
   return (
-    <div className="personajes-container"> 
+    <div className="personajes-container">
       {personajes.map((personaje, index) => (
-        <div key={index} className="personaje-card"> 
+        <div key={index} className="personaje-card">
           <Personaje personajeId={personaje.uid} />
         </div>
       ))}
@@ -36,6 +46,7 @@ const Personajes = () => {
 };
 
 export default Personajes;
+
 
 
 

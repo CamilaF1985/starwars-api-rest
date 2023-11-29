@@ -10,13 +10,22 @@ const DetallePlaneta = () => {
     useEffect(() => {
         const obtenerPlaneta = async () => {
             try {
-                const response = await axios.get(`https://www.swapi.tech/api/planets?name=${id}`);
+                // Intenta obtener el planeta del localStorage
+                const storedPlaneta = localStorage.getItem(`planeta_${id}`);
 
-                if (response.data.message === "ok" && response.data.result.length > 0) {
-                    const planetaEncontrado = response.data.result[0];
-                    setPlaneta(planetaEncontrado);
+                if (storedPlaneta) {
+                    setPlaneta(JSON.parse(storedPlaneta));
                 } else {
-                    console.error(`No se encontraron planetas con el nombre ${id}`);
+                    const response = await axios.get(`https://www.swapi.tech/api/planets?name=${id}`);
+
+                    if (response.data.message === "ok" && response.data.result.length > 0) {
+                        const planetaEncontrado = response.data.result[0];
+                        // Guarda el planeta en el localStorage
+                        localStorage.setItem(`planeta_${id}`, JSON.stringify(planetaEncontrado));
+                        setPlaneta(planetaEncontrado);
+                    } else {
+                        console.error(`No se encontraron planetas con el nombre ${id}`);
+                    }
                 }
             } catch (error) {
                 console.error(`Error al obtener el planeta:`, error);
@@ -78,6 +87,7 @@ const DetallePlaneta = () => {
 };
 
 export default DetallePlaneta;
+
 
 
 

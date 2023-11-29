@@ -10,13 +10,22 @@ const DetalleVehiculo = () => {
     useEffect(() => {
         const obtenerVehiculo = async () => {
             try {
-                const response = await axios.get(`https://www.swapi.tech/api/vehicles?name=${id}`);
+                // Intenta obtener el vehículo del localStorage
+                const storedVehiculo = localStorage.getItem(`vehiculo_${id}`);
 
-                if (response.data.message === "ok" && response.data.result.length > 0) {
-                    const vehiculoEncontrado = response.data.result[0];
-                    setVehiculo(vehiculoEncontrado);
+                if (storedVehiculo) {
+                    setVehiculo(JSON.parse(storedVehiculo));
                 } else {
-                    console.error(`No se encontraron vehículos con el nombre ${id}`);
+                    const response = await axios.get(`https://www.swapi.tech/api/vehicles?name=${id}`);
+
+                    if (response.data.message === "ok" && response.data.result.length > 0) {
+                        const vehiculoEncontrado = response.data.result[0];
+                        // Guarda el vehículo en el localStorage
+                        localStorage.setItem(`vehiculo_${id}`, JSON.stringify(vehiculoEncontrado));
+                        setVehiculo(vehiculoEncontrado);
+                    } else {
+                        console.error(`No se encontraron vehículos con el nombre ${id}`);
+                    }
                 }
             } catch (error) {
                 console.error(`Error al obtener el vehículo:`, error);
@@ -78,6 +87,7 @@ const DetalleVehiculo = () => {
 };
 
 export default DetalleVehiculo;
+
 
 
 

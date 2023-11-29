@@ -10,13 +10,22 @@ const DetallePersonaje = () => {
   useEffect(() => {
     const obtenerPersonaje = async () => {
       try {
-        const response = await axios.get(`https://www.swapi.tech/api/people?name=${id}`);
+        // Intenta obtener el personaje del localStorage
+        const storedPersonaje = localStorage.getItem(`personaje_${id}`);
 
-        if (response.data.message === "ok" && response.data.result.length > 0) {
-          const personajeEncontrado = response.data.result[0];
-          setPersonaje(personajeEncontrado);
+        if (storedPersonaje) {
+          setPersonaje(JSON.parse(storedPersonaje));
         } else {
-          console.error(`No se encontraron personajes con el nombre ${id}`);
+          const response = await axios.get(`https://www.swapi.tech/api/people?name=${id}`);
+
+          if (response.data.message === "ok" && response.data.result.length > 0) {
+            const personajeEncontrado = response.data.result[0];
+            // Guarda el personaje en el localStorage
+            localStorage.setItem(`personaje_${id}`, JSON.stringify(personajeEncontrado));
+            setPersonaje(personajeEncontrado);
+          } else {
+            console.error(`No se encontraron personajes con el nombre ${id}`);
+          }
         }
       } catch (error) {
         console.error(`Error al obtener el personaje:`, error);
@@ -76,6 +85,7 @@ const DetallePersonaje = () => {
 };
 
 export default DetallePersonaje;
+
 
 
 

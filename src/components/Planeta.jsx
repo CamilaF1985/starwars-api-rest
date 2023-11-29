@@ -1,20 +1,30 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { useFavoritos } from '../store/FavoritosContext'; 
+import { useFavoritos } from '../store/FavoritosContext';
 
 const Planeta = ({ planetaId }) => {
   const [planeta, setPlaneta] = useState(null);
   const navigate = useNavigate();
-  const { agregarFavorito } = useFavoritos(); 
+  const { agregarFavorito } = useFavoritos();
 
   useEffect(() => {
     const obtenerPlaneta = async () => {
-      try {
-        const response = await axios.get(`https://www.swapi.tech/api/planets/${planetaId}`);
-        setPlaneta(response.data);
-      } catch (error) {
-        console.error('Error al obtener el planeta:', error);
+      // Intenta obtener el planeta del localStorage
+      const storedPlaneta = localStorage.getItem(`planeta-${planetaId}`);
+
+      if (storedPlaneta) {
+        setPlaneta(JSON.parse(storedPlaneta));
+      } else {
+        try {
+          const response = await axios.get(`https://www.swapi.tech/api/planets/${planetaId}`);
+          const planetaData = response.data;
+          // Guarda el planeta en el localStorage
+          localStorage.setItem(`planeta-${planetaId}`, JSON.stringify(planetaData));
+          setPlaneta(planetaData);
+        } catch (error) {
+          console.error('Error al obtener el planeta:', error);
+        }
       }
     };
 
@@ -66,6 +76,7 @@ const Planeta = ({ planetaId }) => {
 };
 
 export default Planeta;
+
 
 
 
