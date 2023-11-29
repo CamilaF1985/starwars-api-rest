@@ -9,8 +9,14 @@ const DetallePlaneta = () => {
     useEffect(() => {
         const obtenerPlaneta = async () => {
             try {
-                const response = await axios.get(`https://www.swapi.tech/api/planets/${id}`);
-                setPlaneta(response.data.result);
+                const response = await axios.get(`https://www.swapi.tech/api/planets?name=${id}`);
+
+                if (response.data.message === "ok" && response.data.result.length > 0) {
+                    const planetaEncontrado = response.data.result[0];
+                    setPlaneta(planetaEncontrado);
+                } else {
+                    console.error(`No se encontraron planetas con el nombre ${id}`);
+                }
             } catch (error) {
                 console.error(`Error al obtener el planeta:`, error);
             }
@@ -23,7 +29,7 @@ const DetallePlaneta = () => {
         return <p>Cargando...</p>;
     }
 
-    const properties = planeta?.properties;
+    const properties = planeta.properties;
 
     if (!properties) {
         console.error(`Las propiedades del planeta son nulas.`);
@@ -57,7 +63,7 @@ const DetallePlaneta = () => {
                     </div>
                 ))}
             </div>
-            {/* Agregar el enlace para volver al inicio */}
+
             <div className="row">
                 <div className="col-md-12">
                     <Link to="/">Volver al inicio</Link>
@@ -68,3 +74,6 @@ const DetallePlaneta = () => {
 };
 
 export default DetallePlaneta;
+
+
+

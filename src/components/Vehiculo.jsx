@@ -33,7 +33,7 @@ const Vehiculo = ({ vehiculoId }) => {
   const { name, model, manufacturer } = properties;
 
   const redirectToDetalle = () => {
-    navigate(`/views/detallevehiculo/vehicles/${vehiculoId}`);
+    navigate(`/views/detallevehiculo/vehicles/${encodeURIComponent(name)}`);
   };
 
   return (

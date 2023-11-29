@@ -33,8 +33,7 @@ const Personaje = ({ personajeId }) => {
   const { name, gender, hair_color, eye_color } = properties;
 
   const redirectToDetalle = () => {
-    // Utiliza navigate para redirigir a la ruta correspondiente
-    navigate(`/views/detallepersonaje/people/${personajeId}`);
+    navigate(`/views/detallepersonaje/people/${encodeURIComponent(name)}`);
   };
 
   return (
@@ -47,7 +46,6 @@ const Personaje = ({ personajeId }) => {
           <strong>Color de pelo:</strong> {hair_color || 'N/A'}<br />
           <strong>Color de ojos:</strong> {eye_color || 'N/A'}
         </p>
-        {/* Utiliza el componente Link para la navegación */}
         <button className="btn btn-outline-primary" type="button" onClick={redirectToDetalle}>
           Acerca de
         </button>
@@ -60,6 +58,8 @@ const Personaje = ({ personajeId }) => {
 };
 
 export default Personaje;
+
+
 
 
 

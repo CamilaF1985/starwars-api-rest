@@ -9,8 +9,14 @@ const DetalleVehiculo = () => {
     useEffect(() => {
         const obtenerVehiculo = async () => {
             try {
-                const response = await axios.get(`https://www.swapi.tech/api/vehicles/${id}`);
-                setVehiculo(response.data.result);
+                const response = await axios.get(`https://www.swapi.tech/api/vehicles?name=${id}`);
+
+                if (response.data.message === "ok" && response.data.result.length > 0) {
+                    const vehiculoEncontrado = response.data.result[0];
+                    setVehiculo(vehiculoEncontrado);
+                } else {
+                    console.error(`No se encontraron vehículos con el nombre ${id}`);
+                }
             } catch (error) {
                 console.error(`Error al obtener el vehículo:`, error);
             }
@@ -23,7 +29,7 @@ const DetalleVehiculo = () => {
         return <p>Cargando...</p>;
     }
 
-    const properties = vehiculo?.properties;
+    const properties = vehiculo.properties;
 
     if (!properties) {
         console.error(`Las propiedades del vehículo son nulas.`);
@@ -57,7 +63,7 @@ const DetalleVehiculo = () => {
                     </div>
                 ))}
             </div>
-            {/* Agregar el enlace para volver al inicio */}
+
             <div className="row">
                 <div className="col-md-12">
                     <Link to="/">Volver al inicio</Link>
@@ -68,5 +74,7 @@ const DetalleVehiculo = () => {
 };
 
 export default DetalleVehiculo;
+
+
 
 

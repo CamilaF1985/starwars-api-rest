@@ -1,6 +1,7 @@
+// DetallePersonaje.jsx
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useParams, Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 const DetallePersonaje = () => {
   const { id } = useParams();
@@ -9,8 +10,14 @@ const DetallePersonaje = () => {
   useEffect(() => {
     const obtenerPersonaje = async () => {
       try {
-        const response = await axios.get(`https://www.swapi.tech/api/people/${id}`);
-        setPersonaje(response.data);
+        const response = await axios.get(`https://www.swapi.tech/api/people?name=${id}`);
+
+        if (response.data.message === "ok" && response.data.result.length > 0) {
+          const personajeEncontrado = response.data.result[0];
+          setPersonaje(personajeEncontrado);
+        } else {
+          console.error(`No se encontraron personajes con el nombre ${id}`);
+        }
       } catch (error) {
         console.error(`Error al obtener el personaje:`, error);
       }
@@ -23,7 +30,7 @@ const DetallePersonaje = () => {
     return <p>Cargando...</p>;
   }
 
-  const properties = personaje.result?.properties;
+  const properties = personaje.properties;
 
   if (!properties) {
     console.error(`Las propiedades del personaje son nulas.`);
@@ -54,7 +61,7 @@ const DetallePersonaje = () => {
           </div>
         ))}
       </div>
-      {/* Agregar el enlace para volver al inicio */}
+
       <div className="row">
         <div className="col-md-12">
           <Link to="/">Volver al inicio</Link>
