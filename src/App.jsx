@@ -4,6 +4,7 @@ import BarraNavegacion from './components/Navbar';
 import Personajes from './components/Personajes';
 import Vehiculos from './components/Vehiculos';
 import Planetas from './components/Planetas';
+import Footer from './components/Footer'; // Importa el Footer
 import './assets/css/App.css';
 
 function App() {
@@ -52,11 +53,14 @@ function App() {
           )}
         </div>
       </div>
+      <Footer /> {/* Agrega el Footer al final */}
     </div>
   );
 }
 
 export default App;
+
+
 
 
 

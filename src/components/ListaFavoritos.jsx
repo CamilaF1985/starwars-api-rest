@@ -2,13 +2,13 @@ import React from 'react';
 
 const ListaFavoritos = ({ favoritos, onEliminarClick }) => (
   <div className="position-absolute end-0 mt-2 dropdown-personalizado">
-    <div className="card bg-light">
+    <div className="card bg-light dropdown-menu">
       <div className="card-body">
         {favoritos.length === 0 ? (
-          <p>No hay elementos en favoritos.</p>
+          <p className="dropdown-item">No hay elementos en favoritos.</p>
         ) : (
           favoritos.map((elemento, index) => (
-            <div key={index} className="d-flex align-items-center">
+            <div key={index} className="dropdown-item d-flex align-items-center">
               <span className="col-10">{elemento.name}</span>
               <i
                 className="bi bi-trash text-dark col-2"
@@ -24,3 +24,4 @@ const ListaFavoritos = ({ favoritos, onEliminarClick }) => (
 );
 
 export default ListaFavoritos;
+
