@@ -21,7 +21,7 @@ const Footer = () => {
   };
 
   return (
-    <footer className={`bg-dark p-5 fixed-bottom ${tieneSugerenciasPersonajes || tieneSugerenciasPlanetas || tieneSugerenciasVehiculos ? 'con-sugerencias' : ''}`}>
+    <footer className={`bg-dark p-5 ${tieneSugerenciasPersonajes || tieneSugerenciasPlanetas || tieneSugerenciasVehiculos ? 'con-sugerencias' : ''}`}>
       <div className="container">
         <div className="row">
           <div className="col-12 col-sm-6 col-md-4">
