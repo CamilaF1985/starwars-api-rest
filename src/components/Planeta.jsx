@@ -33,10 +33,7 @@ const Planeta = ({ planetaId }) => {
   };
 
   const agregarAFavoritos = () => {
-    agregarFavorito({
-      id: planetaId,
-      name,
-    });
+    agregarFavorito('planeta', planetaId);
   };
 
   return (
@@ -60,6 +57,7 @@ const Planeta = ({ planetaId }) => {
 };
 
 export default Planeta;
+
 
 
 

@@ -33,10 +33,7 @@ const Personaje = ({ personajeId }) => {
   };
 
   const agregarAFavoritos = () => {
-    agregarFavorito({
-      id: personajeId,
-      name,
-    });
+    agregarFavorito('personaje', personajeId);
   };
 
   return (
@@ -61,6 +58,7 @@ const Personaje = ({ personajeId }) => {
 };
 
 export default Personaje;
+
 
 
 

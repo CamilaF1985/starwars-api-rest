@@ -10,21 +10,12 @@ const Vehiculo = ({ vehiculoId }) => {
 
   useEffect(() => {
     const obtenerVehiculo = async () => {
-      // Intenta obtener el vehículo del localStorage
-      const storedVehiculo = localStorage.getItem(`vehiculo-${vehiculoId}`);
-
-      if (storedVehiculo) {
-        setVehiculo(JSON.parse(storedVehiculo));
-      } else {
-        try {
-          const response = await axios.get(`http://localhost:3000/vehiculos/${vehiculoId}`);
-          const vehiculoData = response.data;
-          // Guarda el vehículo en el localStorage
-          localStorage.setItem(`vehiculo-${vehiculoId}`, JSON.stringify(vehiculoData));
-          setVehiculo(vehiculoData);
-        } catch (error) {
-          console.error('Error al obtener el vehículo:', error);
-        }
+      try {
+        const response = await axios.get(`http://localhost:3000/vehiculos/${vehiculoId}`);
+        const vehiculoData = response.data;
+        setVehiculo(vehiculoData);
+      } catch (error) {
+        console.error('Error al obtener el vehículo:', error);
       }
     };
 
@@ -42,10 +33,7 @@ const Vehiculo = ({ vehiculoId }) => {
   };
 
   const agregarAFavoritos = () => {
-    agregarFavorito({
-      id: vehiculoId,
-      name,
-    });
+    agregarFavorito('vehiculo', vehiculoId);
   };
 
   return (
@@ -69,6 +57,7 @@ const Vehiculo = ({ vehiculoId }) => {
 };
 
 export default Vehiculo;
+
 
 
 
