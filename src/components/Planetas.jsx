@@ -17,8 +17,8 @@ const Planetas = () => {
       if (storedPlanetas) {
         setPlanetas(JSON.parse(storedPlanetas));
       } else {
-        const response = await axios.get('https://www.swapi.tech/api/planets');
-        const planetasData = response.data.results;
+        const response = await axios.get('http://localhost:3000/planetas');
+        const planetasData = response.data;
         // Guarda los planetas en el localStorage
         localStorage.setItem('planetas', JSON.stringify(planetasData));
         setPlanetas(planetasData);
@@ -38,7 +38,7 @@ const Planetas = () => {
     <div className="planetas-container">
       {planetas.map((planeta, index) => (
         <div key={index} className="planeta-card">
-          <Planeta planetaId={planeta.uid} />
+          <Planeta planetaId={planeta.id} />
         </div>
       ))}
     </div>
@@ -46,4 +46,5 @@ const Planetas = () => {
 };
 
 export default Planetas;
+
 

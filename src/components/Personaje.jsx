@@ -10,21 +10,12 @@ const Personaje = ({ personajeId }) => {
 
   useEffect(() => {
     const obtenerPersonaje = async () => {
-      // Intenta obtener el personaje del localStorage
-      const storedPersonaje = localStorage.getItem(`personaje-${personajeId}`);
-
-      if (storedPersonaje) {
-        setPersonaje(JSON.parse(storedPersonaje));
-      } else {
-        try {
-          const response = await axios.get(`https://www.swapi.tech/api/people/${personajeId}`);
-          const personajeData = response.data;
-          // Guarda el personaje en el localStorage
-          localStorage.setItem(`personaje-${personajeId}`, JSON.stringify(personajeData));
-          setPersonaje(personajeData);
-        } catch (error) {
-          console.error('Error al obtener el personaje:', error);
-        }
+      try {
+        const response = await axios.get(`http://localhost:3000/personajes/${personajeId}`);
+        const personajeData = response.data;
+        setPersonaje(personajeData);
+      } catch (error) {
+        console.error('Error al obtener el personaje:', error);
       }
     };
 
@@ -35,14 +26,7 @@ const Personaje = ({ personajeId }) => {
     return null;
   }
 
-  const properties = personaje.result && personaje.result.properties;
-
-  if (!properties) {
-    console.error('Las propiedades del personaje son nulas.');
-    return null;
-  }
-
-  const { name, gender, hair_color, eye_color } = properties;
+  const { name, gender, hair_color, eye_color } = personaje;
 
   const redirectToDetalle = () => {
     navigate(`/views/detallepersonaje/people/${encodeURIComponent(name)}`);
@@ -77,6 +61,7 @@ const Personaje = ({ personajeId }) => {
 };
 
 export default Personaje;
+
 
 
 

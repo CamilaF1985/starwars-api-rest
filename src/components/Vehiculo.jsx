@@ -17,7 +17,7 @@ const Vehiculo = ({ vehiculoId }) => {
         setVehiculo(JSON.parse(storedVehiculo));
       } else {
         try {
-          const response = await axios.get(`https://www.swapi.tech/api/vehicles/${vehiculoId}`);
+          const response = await axios.get(`http://localhost:3000/vehiculos/${vehiculoId}`);
           const vehiculoData = response.data;
           // Guarda el vehículo en el localStorage
           localStorage.setItem(`vehiculo-${vehiculoId}`, JSON.stringify(vehiculoData));
@@ -35,14 +35,7 @@ const Vehiculo = ({ vehiculoId }) => {
     return null;
   }
 
-  const properties = vehiculo.result && vehiculo.result.properties;
-
-  if (!properties) {
-    console.error('Las propiedades del vehículo son nulas.');
-    return null;
-  }
-
-  const { name, model, manufacturer } = properties;
+  const { name, model, manufacturer } = vehiculo;
 
   const redirectToDetalle = () => {
     navigate(`/views/detallevehiculo/vehicles/${encodeURIComponent(name)}`);
@@ -76,6 +69,7 @@ const Vehiculo = ({ vehiculoId }) => {
 };
 
 export default Vehiculo;
+
 
 
 

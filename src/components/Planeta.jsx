@@ -10,21 +10,12 @@ const Planeta = ({ planetaId }) => {
 
   useEffect(() => {
     const obtenerPlaneta = async () => {
-      // Intenta obtener el planeta del localStorage
-      const storedPlaneta = localStorage.getItem(`planeta-${planetaId}`);
-
-      if (storedPlaneta) {
-        setPlaneta(JSON.parse(storedPlaneta));
-      } else {
-        try {
-          const response = await axios.get(`https://www.swapi.tech/api/planets/${planetaId}`);
-          const planetaData = response.data;
-          // Guarda el planeta en el localStorage
-          localStorage.setItem(`planeta-${planetaId}`, JSON.stringify(planetaData));
-          setPlaneta(planetaData);
-        } catch (error) {
-          console.error('Error al obtener el planeta:', error);
-        }
+      try {
+        const response = await axios.get(`http://localhost:3000/planetas/${planetaId}`);
+        const planetaData = response.data;
+        setPlaneta(planetaData);
+      } catch (error) {
+        console.error('Error al obtener el planeta:', error);
       }
     };
 
@@ -35,14 +26,7 @@ const Planeta = ({ planetaId }) => {
     return null;
   }
 
-  const properties = planeta.result && planeta.result.properties;
-
-  if (!properties) {
-    console.error('Las propiedades del planeta son nulas.');
-    return null;
-  }
-
-  const { name, population, gravity } = properties;
+  const { name, population, gravity } = planeta;
 
   const redirectToDetalle = () => {
     navigate(`/views/detalleplaneta/planets/${encodeURIComponent(name)}`);
@@ -76,6 +60,7 @@ const Planeta = ({ planetaId }) => {
 };
 
 export default Planeta;
+
 
 
 

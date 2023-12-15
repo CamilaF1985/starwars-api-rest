@@ -17,8 +17,8 @@ const Vehiculos = () => {
       if (storedVehiculos) {
         setVehiculos(JSON.parse(storedVehiculos));
       } else {
-        const response = await axios.get('https://www.swapi.tech/api/vehicles');
-        const vehiculosData = response.data.results;
+        const response = await axios.get('http://localhost:3000/vehiculos');
+        const vehiculosData = response.data;
         // Guarda los vehículos en el localStorage
         localStorage.setItem('vehiculos', JSON.stringify(vehiculosData));
         setVehiculos(vehiculosData);
@@ -38,7 +38,7 @@ const Vehiculos = () => {
     <div className="vehiculos-container">
       {vehiculos.map((vehiculo, index) => (
         <div key={index} className="vehiculo-card">
-          <Vehiculo vehiculoId={vehiculo.uid} />
+          <Vehiculo vehiculoId={vehiculo.id} />
         </div>
       ))}
     </div>
@@ -46,5 +46,6 @@ const Vehiculos = () => {
 };
 
 export default Vehiculos;
+
 
 
