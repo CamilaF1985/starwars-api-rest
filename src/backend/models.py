@@ -1,7 +1,6 @@
-from sqlalchemy import Column, Integer, String, DateTime, JSON, create_engine
-from sqlalchemy.orm import declarative_base
+from sqlalchemy import Column, Integer, String, Text, DateTime, JSON, ForeignKey
+from sqlalchemy.orm import declarative_base, sessionmaker
 from datetime import datetime
-from sqlalchemy import ForeignKey
 
 Base = declarative_base()
 
@@ -46,13 +45,23 @@ class Personaje(Base):
     created = Column(String(50), nullable=False, default=datetime.utcnow().isoformat())
     edited = Column(String(50), nullable=False, default=datetime.utcnow().isoformat())
 
-class Favorito(Base):
-    __tablename__ = 'favorito'
+class FavoritoPlaneta(Base):
+    __tablename__ = 'favorito_planeta'
     id = Column(Integer, primary_key=True)
-    usuario_id = Column(Integer, ForeignKey('usuario.id'), nullable=True)
-    planeta_id = Column(Integer, ForeignKey('planeta.id'), nullable=True)
-    personaje_id = Column(Integer, ForeignKey('personaje.id'), nullable=True)
-    vehiculo_id = Column(Integer, ForeignKey('vehiculo.id'), nullable=True)
+    usuario_id = Column(Integer, ForeignKey('usuario.id'))
+    planeta_id = Column(Integer, ForeignKey('planeta.id'))
+
+class FavoritoPersonaje(Base):
+    __tablename__ = 'favorito_personaje'
+    id = Column(Integer, primary_key=True)
+    usuario_id = Column(Integer, ForeignKey('usuario.id'))
+    personaje_id = Column(Integer, ForeignKey('personaje.id'))
+
+class FavoritoVehiculo(Base):
+    __tablename__ = 'favorito_vehiculo'
+    id = Column(Integer, primary_key=True)
+    usuario_id = Column(Integer, ForeignKey('usuario.id'))
+    vehiculo_id = Column(Integer, ForeignKey('vehiculo.id'))
 
 class Vehiculo(Base):
     __tablename__ = 'vehiculo'
@@ -73,6 +82,10 @@ class Vehiculo(Base):
     edited = Column(String(50), nullable=False, default=datetime.utcnow().isoformat())
     name = Column(String(255), unique=False, nullable=True)
     url = Column(String(255), nullable=True)
+
+
+
+
 
 
 

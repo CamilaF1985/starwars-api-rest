@@ -1,9 +1,9 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 from flask_cors import CORS
 from flask_restful import Api, Resource
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from models import Usuario, Favorito, Planeta, Personaje, Vehiculo
+from models import Usuario, FavoritoPlaneta, FavoritoPersonaje, FavoritoVehiculo, Planeta, Personaje, Vehiculo
 
 app = Flask(__name__)
 CORS(app, resources={r"/api/*": {"origins": "*"}})
@@ -174,48 +174,12 @@ class UsuariosResource(Resource):
         finally:
             session.close()
 
-class FavoritosResource(Resource):
-    def get(self):
-        session = Session()
-        try:
-            user_id = 1
-            favoritos_list = session.query(Favorito).filter_by(usuario_id=user_id).all()
-            result = []
-
-            for fav in favoritos_list:
-                elemento_favorito = None
-                elemento_nombre = None
-
-                if fav.planeta_id is not None:
-                    elemento_favorito = session.query(Planeta).filter_by(id=fav.planeta_id).first()
-                    elemento_nombre = elemento_favorito.name if elemento_favorito else None
-                elif fav.personaje_id is not None:
-                    elemento_favorito = session.query(Personaje).filter_by(id=fav.personaje_id).first()
-                    elemento_nombre = elemento_favorito.name if elemento_favorito else None
-                elif fav.vehiculo_id is not None:
-                    elemento_favorito = session.query(Vehiculo).filter_by(id=fav.vehiculo_id).first()
-                    elemento_nombre = elemento_favorito.name if elemento_favorito else None
-
-                if elemento_favorito:
-                    result.append({
-                        "id": fav.id,
-                        "elemento_id": fav.planeta_id or fav.personaje_id or fav.vehiculo_id,
-                        "elemento_nombre": elemento_nombre,
-                        "planeta_id": fav.planeta_id,
-                        "personaje_id": fav.personaje_id,
-                        "vehiculo_id": fav.vehiculo_id
-                    })
-
-            return result, 200
-        finally:
-            session.close()
-
 class FavoritoPlanetaResource(Resource):
     def post(self, planeta_id):
         session = Session()
         try:
             user_id = 1
-            nuevo_favorito = Favorito(usuario_id=user_id, planeta_id=planeta_id)
+            nuevo_favorito = FavoritoPlaneta(usuario_id=user_id, planeta_id=planeta_id)
             session.add(nuevo_favorito)
             session.commit()
             return {"message": "Planeta agregado a favoritos"}, 201
@@ -226,7 +190,7 @@ class FavoritoPlanetaResource(Resource):
         session = Session()
         try:
             user_id = 1
-            favorito_a_eliminar = session.query(Favorito).filter_by(usuario_id=user_id, planeta_id=planeta_id).first()
+            favorito_a_eliminar = session.query(FavoritoPlaneta).filter_by(usuario_id=user_id, planeta_id=planeta_id).first()
             if favorito_a_eliminar:
                 session.delete(favorito_a_eliminar)
                 session.commit()
@@ -240,7 +204,7 @@ class FavoritoPersonajeResource(Resource):
         session = Session()
         try:
             user_id = 1
-            nuevo_favorito = Favorito(usuario_id=user_id, personaje_id=personaje_id)
+            nuevo_favorito = FavoritoPersonaje(usuario_id=user_id, personaje_id=personaje_id)
             session.add(nuevo_favorito)
             session.commit()
             return {"message": "Personaje agregado a favoritos"}, 201
@@ -251,7 +215,7 @@ class FavoritoPersonajeResource(Resource):
         session = Session()
         try:
             user_id = 1
-            favorito_a_eliminar = session.query(Favorito).filter_by(usuario_id=user_id, personaje_id=personaje_id).first()
+            favorito_a_eliminar = session.query(FavoritoPersonaje).filter_by(usuario_id=user_id, personaje_id=personaje_id).first()
             if favorito_a_eliminar:
                 session.delete(favorito_a_eliminar)
                 session.commit()
@@ -265,7 +229,7 @@ class FavoritoVehiculoResource(Resource):
         session = Session()
         try:
             user_id = 1
-            nuevo_favorito = Favorito(usuario_id=user_id, vehiculo_id=vehiculo_id)
+            nuevo_favorito = FavoritoVehiculo(usuario_id=user_id, vehiculo_id=vehiculo_id)
             session.add(nuevo_favorito)
             session.commit()
             return {"message": "Vehiculo agregado a favoritos"}, 201
@@ -276,7 +240,7 @@ class FavoritoVehiculoResource(Resource):
         session = Session()
         try:
             user_id = 1
-            favorito_a_eliminar = session.query(Favorito).filter_by(usuario_id=user_id, vehiculo_id=vehiculo_id).first()
+            favorito_a_eliminar = session.query(FavoritoVehiculo).filter_by(usuario_id=user_id, vehiculo_id=vehiculo_id).first()
             if favorito_a_eliminar:
                 session.delete(favorito_a_eliminar)
                 session.commit()
@@ -290,18 +254,25 @@ api.add_resource(PersonajesResource, '/personajes', '/personajes/<int:personaje_
 api.add_resource(PlanetasResource, '/planetas', '/planetas/<int:planeta_id>')
 api.add_resource(VehiculosResource, '/vehiculos', '/vehiculos/<int:vehiculo_id>')
 api.add_resource(UsuariosResource, '/usuarios')
-api.add_resource(FavoritosResource, '/usuarios/favoritos')
 api.add_resource(FavoritoPlanetaResource, '/favorito/planeta/<int:planeta_id>')
 api.add_resource(FavoritoPersonajeResource, '/favorito/personaje/<int:personaje_id>')
-api.add_resource(FavoritoVehiculoResource, '/favorito/vehiculo/<int:vehiculo_id>') 
+api.add_resource(FavoritoVehiculoResource, '/favorito/vehiculo/<int:vehiculo_id>')
 
-# Manejo de CORS manualmente con un middleware
 @app.after_request
 def after_request(response):
     response.headers.add('Access-Control-Allow-Origin', 'http://localhost:5000')
     response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
     response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE')
     response.headers.add('Access-Control-Allow-Credentials', 'true')
+
+    # Handle OPTIONS requests for specific route
+    if request.method == 'OPTIONS' and request.path == '/usuarios/favoritos':
+        response.headers['Access-Control-Allow-Origin'] = 'http://localhost:5000'
+        response.headers['Access-Control-Allow-Headers'] = 'Content-Type,Authorization'
+        response.headers['Access-Control-Allow-Methods'] = 'GET,PUT,POST,DELETE'
+        response.headers['Access-Control-Allow-Credentials'] = 'true'
+        return response
+
     return response
 
 if __name__ == '__main__':

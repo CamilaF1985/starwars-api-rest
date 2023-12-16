@@ -29,7 +29,7 @@ const Vehiculo = ({ vehiculoId }) => {
   const { name, model, manufacturer } = vehiculo;
 
   const redirectToDetalle = () => {
-    navigate(`/views/detallevehiculo/vehicles/${encodeURIComponent(name)}`);
+    navigate(`/views/detallevehiculo/vehicles/${encodeURIComponent(vehiculoId)}`);
   };
 
   const agregarAFavoritos = () => {

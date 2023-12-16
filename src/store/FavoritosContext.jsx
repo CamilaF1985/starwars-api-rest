@@ -1,4 +1,3 @@
-// FavoritosContext.jsx
 import React, { createContext, useContext, useState, useEffect } from 'react';
 
 const FavoritosContext = createContext();
@@ -51,7 +50,7 @@ export const FavoritosProvider = ({ children }) => {
       return;
     }
 
-    const endpoint = `http://localhost:3000/favorito/${tipoEndpoint}/${favorito.elemento_id}`;
+    const endpoint = `http://localhost:3000/favorito/${tipoEndpoint}/${favorito.id}`;
 
     fetch(endpoint, {
       method: 'DELETE',
@@ -67,7 +66,7 @@ export const FavoritosProvider = ({ children }) => {
       })
       .then(data => {
         setFavoritos((prevFavoritos) =>
-          prevFavoritos.filter((fav) => !(fav.tipo === tipoEndpoint && fav.id === favorito.elemento_id))
+          prevFavoritos.filter((fav) => !(fav.tipo === tipoEndpoint && fav.id === favorito.id))
         );
         console.log('Favorito eliminado exitosamente:', data);
       })
@@ -101,15 +100,10 @@ export const FavoritosProvider = ({ children }) => {
 
   useEffect(() => {
     obtenerFavoritosDesdeAPI();
-  }, []); // Se ejecuta solo al montar el componente
+  }, []); 
 
   useEffect(() => {
     localStorage.setItem('favoritos', JSON.stringify(favoritos));
-  }, [favoritos]);
-
-  useEffect(() => {
-    // Escucha cambios en favoritos y realiza la llamada a la API cuando cambie
-    obtenerFavoritosDesdeAPI();
   }, [favoritos]);
 
   return (
@@ -126,6 +120,8 @@ export const useFavoritos = () => {
 };
 
 export default FavoritosContext;
+
+
 
 
 

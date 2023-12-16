@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link, useParams } from 'react-router-dom';
-import Navbar from '../components/Navbar';  
+import Navbar from '../components/Navbar';
 
 const DetallePersonaje = () => {
   const { id } = useParams();
@@ -10,25 +10,11 @@ const DetallePersonaje = () => {
   useEffect(() => {
     const obtenerPersonaje = async () => {
       try {
-        // Intenta obtener el personaje del localStorage
-        const storedPersonaje = localStorage.getItem(`personaje_${id}`);
-
-        if (storedPersonaje) {
-          setPersonaje(JSON.parse(storedPersonaje));
-        } else {
-          const response = await axios.get(`https://www.swapi.tech/api/people?name=${id}`);
-
-          if (response.data.message === "ok" && response.data.result.length > 0) {
-            const personajeEncontrado = response.data.result[0];
-            // Guarda el personaje en el localStorage
-            localStorage.setItem(`personaje_${id}`, JSON.stringify(personajeEncontrado));
-            setPersonaje(personajeEncontrado);
-          } else {
-            console.error(`No se encontraron personajes con el nombre ${id}`);
-          }
-        }
+        const response = await axios.get(`http://localhost:3000/personajes/${id}`);
+        const personajeData = response.data;
+        setPersonaje(personajeData);
       } catch (error) {
-        console.error(`Error al obtener el personaje:`, error);
+        console.error('Error al obtener el personaje:', error);
       }
     };
 
@@ -39,14 +25,7 @@ const DetallePersonaje = () => {
     return <p>Cargando...</p>;
   }
 
-  const properties = personaje.properties;
-
-  if (!properties) {
-    console.error(`Las propiedades del personaje son nulas.`);
-    return <p>No se encontraron propiedades para este personaje.</p>;
-  }
-
-  const { name, description, ...restProperties } = properties;
+  const { name, description, ...restProperties } = personaje;
 
   return (
     <div>
@@ -85,6 +64,7 @@ const DetallePersonaje = () => {
 };
 
 export default DetallePersonaje;
+
 
 
 

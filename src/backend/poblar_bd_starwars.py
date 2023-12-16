@@ -1,9 +1,12 @@
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
-from models import Usuario, Planeta, Personaje, Favorito, Vehiculo
+from sqlalchemy import Column, Integer, String, DateTime, create_engine, Text  # Cambia aquí a Text
+from sqlalchemy.orm import declarative_base, sessionmaker
 from werkzeug.security import generate_password_hash
 from datetime import datetime
-import requests  # Agrega la importación de requests
+import requests
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy import ForeignKey
+from sqlalchemy.orm import relationship
+from models import Usuario, Planeta, Personaje, FavoritoPlaneta, FavoritoPersonaje, FavoritoVehiculo, Vehiculo
 
 # URL de conexión MySQL
 engine = create_engine('mysql+pymysql://starwars_admin:12345@localhost/starwars', echo=True)

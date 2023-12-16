@@ -6,7 +6,7 @@ import { useFavoritos } from '../store/FavoritosContext';
 const Planeta = ({ planetaId }) => {
   const [planeta, setPlaneta] = useState(null);
   const navigate = useNavigate();
-  const { agregarFavorito } = useFavoritos();
+  const { agregarFavorito, favoritos } = useFavoritos();
 
   useEffect(() => {
     const obtenerPlaneta = async () => {
@@ -29,11 +29,16 @@ const Planeta = ({ planetaId }) => {
   const { name, population, gravity } = planeta;
 
   const redirectToDetalle = () => {
-    navigate(`/views/detalleplaneta/planets/${encodeURIComponent(name)}`);
+    navigate(`/views/detalleplaneta/planets/${encodeURIComponent(planetaId)}`);
   };
 
   const agregarAFavoritos = () => {
-    agregarFavorito('planeta', planetaId);
+    // Verificar si el planeta ya está en favoritos
+    const existeEnFavoritos = favoritos.some((fav) => fav.tipo === 'planeta' && fav.id === planetaId);
+
+    if (!existeEnFavoritos) {
+      agregarFavorito('planeta', planetaId);
+    }
   };
 
   return (
@@ -57,6 +62,7 @@ const Planeta = ({ planetaId }) => {
 };
 
 export default Planeta;
+
 
 
 
