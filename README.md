@@ -37,9 +37,9 @@ pip install -r requirements.txt
 
 Asegúrate de tener un servidor MySQL en ejecución. Puedes utilizar el siguiente comando para crear la base de datos y un usuario administrador:
 
-CREATE DATABASE IF NOT EXISTS starwars;
-CREATE USER 'starwars_admin'@'localhost' IDENTIFIED BY '12345';
-GRANT ALL PRIVILEGES ON starwars.* TO 'starwars_admin'@'localhost';
+CREATE DATABASE IF NOT EXISTS starwars;<br>
+CREATE USER 'starwars_admin'@'localhost' IDENTIFIED BY '12345';<br>
+GRANT ALL PRIVILEGES ON starwars.* TO 'starwars_admin'@'localhost';<br>
 FLUSH PRIVILEGES;
 
 ### 5. Crear y Poblar la Base de Datos
