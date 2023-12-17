@@ -5,8 +5,9 @@
   "type": "module",
   "scripts": {
     "start": "npm-run-all --parallel start-backend start-frontend",
-    "start-backend": "pipenv run python src/backend/app.py",
+    "start-backend": "npm run populate-db && pipenv run python src/backend/app.py",
     "start-frontend": "npm run dev",
+    "populate-db": "pipenv run python src/backend/poblar_bd_starwars.py",
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",

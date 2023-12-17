@@ -276,19 +276,12 @@ def after_request(response):
     response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE')
     response.headers.add('Access-Control-Allow-Credentials', 'true')
 
-    # Maneja solicitudes OPTIONS para una ruta específica
-    if request.method == 'OPTIONS' and request.path == '/usuarios/favoritos':
-        response.headers['Access-Control-Allow-Origin'] = 'http://localhost:5000'
-        response.headers['Access-Control-Allow-Headers'] = 'Content-Type,Authorization'
-        response.headers['Access-Control-Allow-Methods'] = 'GET,PUT,POST,DELETE'
-        response.headers['Access-Control-Allow-Credentials'] = 'true'
-        return response
-
-    return response
+    return response  
 
 # Inicia la aplicación si este script es ejecutado directamente
 if __name__ == '__main__':
     app.run(debug=True, port=3000)
+
 
 
 

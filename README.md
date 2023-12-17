@@ -42,12 +42,9 @@ CREATE USER 'starwars_admin'@'localhost' IDENTIFIED BY '12345';<br>
 GRANT ALL PRIVILEGES ON starwars.* TO 'starwars_admin'@'localhost';<br>
 FLUSH PRIVILEGES;
 
-### 5. Crear y Poblar la Base de Datos
-
-Ejecutar el script poblar_bd_starwars.py en la carpeta src/backend para crear las tablas y poblar la base de datos.
-python poblar_bd_starwars.py
-
 ### 6. Ejecutar la Aplicación
+
+El siguiente comando iniciará tanto el backend como el frontend, además de crear las tablas y poblar la base de datos automáticamente:
 
 npm start
 
