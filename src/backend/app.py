@@ -5,8 +5,11 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from models import Usuario, FavoritoPlaneta, FavoritoPersonaje, FavoritoVehiculo, Planeta, Personaje, Vehiculo
 
+# Crea una instancia de la aplicación Flask
 app = Flask(__name__)
+# Habilita CORS para permitir solicitudes desde cualquier origen a la API
 CORS(app, resources={r"/api/*": {"origins": "*"}})
+# Crea una instancia de la API de Flask-RESTful
 api = Api(app)
 
 # URL de conexión MySQL
@@ -15,6 +18,7 @@ engine = create_engine('mysql+pymysql://starwars_admin:12345@localhost/starwars'
 # Crea una sesión de base de datos
 Session = sessionmaker(bind=engine)
 
+# Define el recurso para obtener información de personajes
 class PersonajesResource(Resource):
     def get(self, personaje_id=None):
         session = Session()
@@ -62,6 +66,7 @@ class PersonajesResource(Resource):
         finally:
             session.close()
 
+# Define el recurso para obtener información de planetas
 class PlanetasResource(Resource):
     def get(self, planeta_id=None):
         session = Session()
@@ -109,6 +114,7 @@ class PlanetasResource(Resource):
         finally:
             session.close()
 
+# Define el recurso para obtener información de vehiculos
 class VehiculosResource(Resource):
     def get(self, vehiculo_id=None):
         session = Session()
@@ -164,6 +170,7 @@ class VehiculosResource(Resource):
         finally:
             session.close()
 
+# Define el recurso para obtener información de usuarios
 class UsuariosResource(Resource):
     def get(self):
         session = Session()
@@ -174,6 +181,7 @@ class UsuariosResource(Resource):
         finally:
             session.close()
 
+# Define el recurso para manejar favoritos de planetas
 class FavoritoPlanetaResource(Resource):
     def post(self, planeta_id):
         session = Session()
@@ -199,6 +207,7 @@ class FavoritoPlanetaResource(Resource):
         finally:
             session.close()
 
+# Define el recurso para manejar favoritos de personajes
 class FavoritoPersonajeResource(Resource):
     def post(self, personaje_id):
         session = Session()
@@ -224,6 +233,7 @@ class FavoritoPersonajeResource(Resource):
         finally:
             session.close()
 
+# Define el recurso para manejar favoritos de vehiculos
 class FavoritoVehiculoResource(Resource):  
     def post(self, vehiculo_id):
         session = Session()
@@ -258,6 +268,7 @@ api.add_resource(FavoritoPlanetaResource, '/favorito/planeta/<int:planeta_id>')
 api.add_resource(FavoritoPersonajeResource, '/favorito/personaje/<int:personaje_id>')
 api.add_resource(FavoritoVehiculoResource, '/favorito/vehiculo/<int:vehiculo_id>')
 
+# Configura las cabeceras de CORS para todas las respuestas
 @app.after_request
 def after_request(response):
     response.headers.add('Access-Control-Allow-Origin', 'http://localhost:5000')
@@ -265,7 +276,7 @@ def after_request(response):
     response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE')
     response.headers.add('Access-Control-Allow-Credentials', 'true')
 
-    # Handle OPTIONS requests for specific route
+    # Maneja solicitudes OPTIONS para una ruta específica
     if request.method == 'OPTIONS' and request.path == '/usuarios/favoritos':
         response.headers['Access-Control-Allow-Origin'] = 'http://localhost:5000'
         response.headers['Access-Control-Allow-Headers'] = 'Content-Type,Authorization'
@@ -275,6 +286,7 @@ def after_request(response):
 
     return response
 
+# Inicia la aplicación si este script es ejecutado directamente
 if __name__ == '__main__':
     app.run(debug=True, port=3000)
 

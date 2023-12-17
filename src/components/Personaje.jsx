@@ -26,14 +26,13 @@ const Personaje = ({ personajeId }) => {
     return null;
   }
 
-  const { name, height, mass, hair_color, skin_color, eye_color, birth_year, gender } = personaje;
+  const { name, hair_color, skin_color, eye_color, gender } = personaje;
 
   const redirectToDetalle = () => {
-    navigate(`/views/detallepersonaje/people/${encodeURIComponent(personajeId)}`);
+    navigate(`/vistas/detallepersonajes/${personaje.id}`);
   };
-
+  
   const agregarAFavoritos = () => {
-    // Verificar si el personaje ya está en favoritos
     const existeEnFavoritos = favoritos.some((fav) => fav.tipo === 'personaje' && fav.id === personajeId);
 
     if (!existeEnFavoritos) {
@@ -47,12 +46,9 @@ const Personaje = ({ personajeId }) => {
       <div className="card-body">
         <h5 className="card-title">{name || 'N/A'}</h5>
         <p className="card-text">
-          <strong>Altura:</strong> {height || 'N/A'}<br />
-          <strong>Peso:</strong> {mass || 'N/A'}<br />
           <strong>Color de cabello:</strong> {hair_color || 'N/A'}<br />
           <strong>Color de piel:</strong> {skin_color || 'N/A'}<br />
           <strong>Color de ojos:</strong> {eye_color || 'N/A'}<br />
-          <strong>Año de nacimiento:</strong> {birth_year || 'N/A'}<br />
           <strong>Género:</strong> {gender || 'N/A'}
         </p>
         <button className="btn btn-outline-primary" type="button" onClick={redirectToDetalle}>

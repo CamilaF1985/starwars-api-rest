@@ -10,8 +10,8 @@ const AutocompleteSearchPersonajes = ({ actualizarSugerencias }) => {
   useEffect(() => {
     const fetchSuggestions = async () => {
       try {
-        const response = await axios.get(`https://www.swapi.tech/api/people`);
-        const data = response.data.results.filter(personaje =>
+        const response = await axios.get(`http://localhost:3000/personajes`);
+        const data = response.data.filter(personaje =>
           personaje.name.toLowerCase().includes(inputValue.toLowerCase())
         );
         setSugerencias(data);
@@ -36,10 +36,10 @@ const AutocompleteSearchPersonajes = ({ actualizarSugerencias }) => {
     setInputValue(inputValue);
   };
 
-  const handleSuggestionClick = (name) => {
-    navigate(`/views/detallepersonaje/people/${name}`);
+  const handleSuggestionClick = (id) => {
+    navigate(`/vistas/detallepersonajes/${id}`);
   };
-
+  
   return (
     <div className="position-relative">
       <input
@@ -65,7 +65,7 @@ const AutocompleteSearchPersonajes = ({ actualizarSugerencias }) => {
                   <span className="col-10">{sugerencia.name}</span>
                   <button
                     className="btn btn-primary btn-sm ms-auto"
-                    onClick={() => handleSuggestionClick(sugerencia.name)}
+                    onClick={() => handleSuggestionClick(sugerencia.id)}
                   >
                     Detalle
                   </button>
@@ -80,6 +80,7 @@ const AutocompleteSearchPersonajes = ({ actualizarSugerencias }) => {
 };
 
 export default AutocompleteSearchPersonajes;
+
 
 
 

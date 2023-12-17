@@ -13,7 +13,7 @@ const ListaFavoritos = () => {
           const endpoint = `http://localhost:3000/${tipo}s/${favorito.id}`;
           const response = await fetch(endpoint);
           const data = await response.json();
-          return data.name; // Ajusta esto según la estructura de tus objetos (name es solo un ejemplo)
+          return data.name; 
         })
       );
       setNombresFavoritos(nombres);

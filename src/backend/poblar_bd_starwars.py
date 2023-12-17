@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, DateTime, create_engine, Text  # Cambia aquí a Text
+from sqlalchemy import Column, Integer, String, DateTime, create_engine, Text  
 from sqlalchemy.orm import declarative_base, sessionmaker
 from werkzeug.security import generate_password_hash
 from datetime import datetime
@@ -11,22 +11,22 @@ from models import Usuario, Planeta, Personaje, FavoritoPlaneta, FavoritoPersona
 # URL de conexión MySQL
 engine = create_engine('mysql+pymysql://starwars_admin:12345@localhost/starwars', echo=True)
 
-# Crea las tablas
+# Crear las tablas
 from models import Base
 Base.metadata.create_all(bind=engine)
 
-# Crea una sesión de base de datos
+# Crear una sesión de base de datos
 Session = sessionmaker(bind=engine)
 session = Session()
 
-# Obtén la fecha y hora actuales
+# Obtener la fecha y hora actuales
 fecha_actual = datetime.utcnow()
 
 # Agregar un usuario administrador
 admin_user = Usuario(
     email='admin@example.com',
-    password=generate_password_hash('admin_password'),  # Asegúrate de utilizar una contraseña segura
-    fecha_subscripcion=fecha_actual.isoformat() + 'Z',  # Utiliza la fecha y hora actuales
+    password=generate_password_hash('admin_password'),  
+    fecha_subscripcion=fecha_actual.isoformat() + 'Z',  
     nombre='Admin',
     apellido='User'
 )

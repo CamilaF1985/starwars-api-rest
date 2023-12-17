@@ -10,8 +10,8 @@ const AutocompleteSearchPlanetas = ({ actualizarSugerencias }) => {
   useEffect(() => {
     const fetchSuggestions = async () => {
       try {
-        const response = await axios.get(`https://www.swapi.tech/api/planets`);
-        const data = response.data.results.filter(planeta =>
+        const response = await axios.get(`http://localhost:3000/planetas`);
+        const data = response.data.filter(planeta =>
           planeta.name.toLowerCase().includes(inputValue.toLowerCase())
         );
         setSugerencias(data);
@@ -36,8 +36,8 @@ const AutocompleteSearchPlanetas = ({ actualizarSugerencias }) => {
     setInputValue(inputValue);
   };
 
-  const handleSuggestionClick = (name) => {
-    navigate(`/views/detalleplaneta/planets/${name}`);
+  const handleSuggestionClick = (id) => {
+    navigate(`/vistas/detalleplanetas/${id}`);
   };
 
   return (
@@ -65,7 +65,7 @@ const AutocompleteSearchPlanetas = ({ actualizarSugerencias }) => {
                   <span className="col-10">{sugerencia.name}</span>
                   <button
                     className="btn btn-primary btn-sm ms-auto"
-                    onClick={() => handleSuggestionClick(sugerencia.name)}
+                    onClick={() => handleSuggestionClick(sugerencia.id)}
                   >
                     Detalle
                   </button>
@@ -80,3 +80,4 @@ const AutocompleteSearchPlanetas = ({ actualizarSugerencias }) => {
 };
 
 export default AutocompleteSearchPlanetas;
+

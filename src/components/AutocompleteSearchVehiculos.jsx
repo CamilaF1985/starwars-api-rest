@@ -10,8 +10,8 @@ const AutocompleteSearchVehiculos = ({ actualizarSugerencias }) => {
   useEffect(() => {
     const fetchSuggestions = async () => {
       try {
-        const response = await axios.get(`https://www.swapi.tech/api/vehicles`);
-        const data = response.data.results.filter(vehiculo =>
+        const response = await axios.get(`http://localhost:3000/vehiculos`);
+        const data = response.data.filter(vehiculo =>
           vehiculo.name.toLowerCase().includes(inputValue.toLowerCase())
         );
         setSugerencias(data);
@@ -36,8 +36,8 @@ const AutocompleteSearchVehiculos = ({ actualizarSugerencias }) => {
     setInputValue(inputValue);
   };
 
-  const handleSuggestionClick = (name) => {
-    navigate(`/views/detallevehiculo/vehicles/${name}`);
+  const handleSuggestionClick = (id) => {
+    navigate(`/vistas/detallevehiculos/${id}`);
   };
 
   return (
@@ -65,7 +65,7 @@ const AutocompleteSearchVehiculos = ({ actualizarSugerencias }) => {
                   <span className="col-10">{sugerencia.name}</span>
                   <button
                     className="btn btn-primary btn-sm ms-auto"
-                    onClick={() => handleSuggestionClick(sugerencia.name)}
+                    onClick={() => handleSuggestionClick(sugerencia.id)}
                   >
                     Detalle
                   </button>
@@ -80,3 +80,4 @@ const AutocompleteSearchVehiculos = ({ actualizarSugerencias }) => {
 };
 
 export default AutocompleteSearchVehiculos;
+

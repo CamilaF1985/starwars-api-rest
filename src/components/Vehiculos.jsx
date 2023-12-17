@@ -11,7 +11,6 @@ const Vehiculos = () => {
     setLoading(true);
 
     try {
-      // Intenta obtener los vehículos del localStorage
       const storedVehiculos = localStorage.getItem('vehiculos');
 
       if (storedVehiculos) {
@@ -19,7 +18,6 @@ const Vehiculos = () => {
       } else {
         const response = await axios.get('http://localhost:3000/vehiculos');
         const vehiculosData = response.data;
-        // Guarda los vehículos en el localStorage
         localStorage.setItem('vehiculos', JSON.stringify(vehiculosData));
         setVehiculos(vehiculosData);
       }

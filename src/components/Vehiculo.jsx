@@ -6,7 +6,7 @@ import { useFavoritos } from '../store/FavoritosContext';
 const Vehiculo = ({ vehiculoId }) => {
   const [vehiculo, setVehiculo] = useState(null);
   const navigate = useNavigate();
-  const { agregarFavorito } = useFavoritos();
+  const { agregarFavorito, favoritos } = useFavoritos(); 
 
   useEffect(() => {
     const obtenerVehiculo = async () => {
@@ -29,11 +29,15 @@ const Vehiculo = ({ vehiculoId }) => {
   const { name, model, manufacturer } = vehiculo;
 
   const redirectToDetalle = () => {
-    navigate(`/views/detallevehiculo/vehicles/${encodeURIComponent(vehiculoId)}`);
+    navigate(`/vistas/detallevehiculos/${vehiculo.id}`);
   };
 
   const agregarAFavoritos = () => {
-    agregarFavorito('vehiculo', vehiculoId);
+    const existeEnFavoritos = favoritos.some((fav) => fav.tipo === 'vehiculo' && fav.id === vehiculoId);
+  
+    if (!existeEnFavoritos) {
+      agregarFavorito('vehiculo', vehiculoId);
+    }
   };
 
   return (

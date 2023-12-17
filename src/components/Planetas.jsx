@@ -11,7 +11,6 @@ const Planetas = () => {
     setLoading(true);
 
     try {
-      // Intenta obtener los planetas del localStorage
       const storedPlanetas = localStorage.getItem('planetas');
 
       if (storedPlanetas) {
@@ -19,7 +18,6 @@ const Planetas = () => {
       } else {
         const response = await axios.get('http://localhost:3000/planetas');
         const planetasData = response.data;
-        // Guarda los planetas en el localStorage
         localStorage.setItem('planetas', JSON.stringify(planetasData));
         setPlanetas(planetasData);
       }

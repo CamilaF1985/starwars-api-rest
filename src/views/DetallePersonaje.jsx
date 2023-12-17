@@ -15,12 +15,13 @@ const DetallePersonaje = () => {
         setPersonaje(personajeData);
       } catch (error) {
         console.error('Error al obtener el personaje:', error);
+        console.error('Detalles del error:', error.response); // Agregado para obtener más detalles del error
       }
     };
-
+  
     obtenerPersonaje();
   }, [id]);
-
+  
   if (!personaje) {
     return <p>Cargando...</p>;
   }

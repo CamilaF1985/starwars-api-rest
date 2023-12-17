@@ -29,11 +29,10 @@ const Planeta = ({ planetaId }) => {
   const { name, population, gravity } = planeta;
 
   const redirectToDetalle = () => {
-    navigate(`/views/detalleplaneta/planets/${encodeURIComponent(planetaId)}`);
+    navigate(`/vistas/detalleplanetas/${planeta.id}`);
   };
 
   const agregarAFavoritos = () => {
-    // Verificar si el planeta ya está en favoritos
     const existeEnFavoritos = favoritos.some((fav) => fav.tipo === 'planeta' && fav.id === planetaId);
 
     if (!existeEnFavoritos) {
