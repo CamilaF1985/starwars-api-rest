@@ -12,6 +12,8 @@ Asegúrate de tener las siguientes versiones de herramientas instaladas en tu si
 
 - **npm:** El administrador de paquetes de Node.js es necesario para instalar las dependencias del frontend. La versión recomendada es 9.8.1.
 
+- **MySQL:** La aplicación utiliza MySQL como motor de base de datos. Asegúrate de tener un servidor MySQL en ejecución antes de configurar y ejecutar la aplicación.
+
 Asegúrate de tener estas versiones instaladas correctamente antes de seguir con las instrucciones de uso.
 
 ## Tecnologías Utilizadas
