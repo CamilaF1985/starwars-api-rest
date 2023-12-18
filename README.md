@@ -2,6 +2,18 @@
 
 Este repositorio contiene una aplicación web llamada Star Wars Blog, que proporciona información sobre personajes, planetas y vehículos de Star Wars. La aplicación está implementada como una API RESTful con un backend en Flask (Python) y un frontend en React.
 
+## Requisitos
+
+Asegúrate de tener las siguientes versiones de herramientas instaladas en tu sistema antes de ejecutar la aplicación:
+
+- **Python:** La aplicación requiere Python 3.12.1 o superior.
+
+- **Node.js:** El frontend de la aplicación está desarrollado en React y requiere Node.js. La versión recomendada es v18.18.0.
+
+- **npm:** El administrador de paquetes de Node.js es necesario para instalar las dependencias del frontend. La versión recomendada es 9.8.1.
+
+Asegúrate de tener estas versiones instaladas correctamente antes de seguir con las instrucciones de uso.
+
 ## Tecnologías Utilizadas
 
 - **Backend:**
