@@ -24,9 +24,8 @@ cd starwars-api-rest
 
 ### 2. Instalar Dependencias del Frontend
 
-cd ../frontend
+cd src
 npm install
-
 
 ### 3. Instalar dependencias del Backend
 
