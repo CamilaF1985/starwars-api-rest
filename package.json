@@ -6,7 +6,7 @@
   "scripts": {
     "start": "npm-run-all --parallel start-backend start-frontend",
     "start-backend": "npm run install-backend && npm run populate-db && npm run run-backend",
-    "install-backend": "pipenv install && pipenv install requests && pipenv install flask-cors && pipenv install flask_restful && pipenv install werkzeug",
+    "install-backend": "pipenv install && pipenv install requests && pipenv install flask-cors && pipenv install flask_restful && pipenv install werkzeug && pipenv install cryptography",
     "run-backend": "pipenv run python src/backend/app.py",
     "start-frontend": "npm run dev",
     "populate-db": "pipenv run python src/backend/poblar_bd_starwars.py",
