@@ -7,6 +7,11 @@ name = "pypi"
 pymysql = "*"
 sqlalchemy = "*"
 flask = "*"
+requests = "*"
+flask-cors = "*"
+flask-restful = "*"
+werkzeug = "*"
+cryptography = "*"
 
 [dev-packages]
 flask = "*"
